@@ -1,20 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import uuid from 'react-uuid';
 import { addItem } from '../actions';
+import useInput from '../hooks/useInput';
 
 const ExpenseForm = () => {
-  const [text, setText] = useState('');
-  const [amount, setAmount] = useState('');
+  const [text, handleText, resetText] = useInput('');
+  const [amount, handleAmount, resetAmount] = useInput('');
   const dispatch = useDispatch();
-
-  const onTextChange = e => {
-    setText(e.target.value);
-  };
-
-  const onAmountChange = e => {
-    setAmount(e.target.value);
-  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -24,8 +17,8 @@ const ExpenseForm = () => {
 
     dispatch(addItem(text, amount, uuid()));
 
-    setText('');
-    setAmount('');
+    resetText();
+    resetAmount();
   };
 
   return (
@@ -34,14 +27,14 @@ const ExpenseForm = () => {
       <input
         className="form-control form-control-lg"
         style={{ marginBottom: '10px' }}
-        onChange={onTextChange}
+        onChange={handleText}
         value={text}
         name="formText"
       />
       <input
         className="form-control form-control-lg"
         style={{ marginBottom: '10px' }}
-        onChange={onAmountChange}
+        onChange={handleAmount}
         value={amount}
         name="formAmount"
       />
