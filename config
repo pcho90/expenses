@@ -1,0 +1,101 @@
+autocmd vimenter * colorscheme gruvbox
+" autocmd vimenter * colorscheme dracula
+autocmd vimenter * syntax on
+autocmd vimenter * AirlineTheme bubblegum
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'gruvbox-community/gruvbox'
+Plug 'pangloss/vim-javascript'
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'tpope/vim-surround'
+Plug 'leafgarland/typescript-vim'
+Plug 'prettier/vim-prettier', { 'do': 'npm install'   }
+Plug 'dense-analysis/ale'
+Plug 'palantir/tslint'
+Plug 'frazrepo/vim-rainbow'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'mbbill/undotree'
+Plug 'gregsexton/matchtag' 
+Plug 'alvan/vim-closetag'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'crusoexia/vim-dracula'
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+
+
+set number
+set relativenumber
+set nowrap
+set cursorline
+set foldlevelstart=99
+set belloff=all
+
+nmap <S-j> 5j
+nmap <S-k> 5k
+nnoremap B ^
+nnoremap E $
+inoremap jk <esc>
+nnoremap ]r :ALENextWrap<CR>     " move to the next ALE warning / error
+nnoremap [r :ALEPreviousWrap<CR> " move to the previous ALE warning / error
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+nnoremap <leader>k :call CocAction('doHover')<CR>
+nnoremap <leader>u :UndotreeShow<CR>
+
+let g:vim_jsx_pretty_colorful_config = 1 
+
+let g:rainbow_active = 1
+
+let g:ale_linters = {
+            \   'javascript': ['eslint'],
+            \   'typescript': ['tsserver', 'tslint'],
+            \}
+
+let g:ale_fixers = {
+            \    'javascript': ['eslint'],
+            \    'typescript': ['prettier'],
+            \    'scss': ['prettier'],
+            \    'html': ['prettier']
+            \}
+let g:ale_fix_on_save = 1
+
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
+
+let g:closetag_filenames = '*.html,*.js,*.jsx'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+let g:closetag_filetypes = 'html,js,jsx'
+let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+let g:closetag_emptyTags_caseSensitive = 1
+let g:closetag_shortcut = '>'
+set t_md=
+let g:airline_theme='bubblegum'
+let g:airline#extensions#tabline#enabled = 1 
+let g:airline#extensions#tabline#tab_nr_type = 1                                                                       
+let g:airline#extensions#tabline#show_splits = 0                                                                       
+let g:airline#extensions#tabline#show_buffers = 0                                                                      
+let g:airline#extensions#tabline#show_tab_type = 1                                                                    
+let g:airline#extensions#tabline#buffer_idx_mode = 1                                                                   
+let g:airline#extensions#tabline#buffer_min_count = 0                                                                 
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#tabs_label = ''
+" let g:dracula_colorterm = 0
+" let g:dracula_italic = 0
+
+call plug#end()
